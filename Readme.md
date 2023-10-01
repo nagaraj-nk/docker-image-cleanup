@@ -1,27 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+# Build
 
-    <groupId>com.srjons</groupId>
-    <artifactId>docker-image-cleanup</artifactId>
-    <version>1.0-SNAPSHOT</version>
+## Step 1
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+Paste below code in **pom.xml** under project tag 
 
-    <build>
+Change class name with fully qualified name
+```
+<build>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.srjons.DockerImageCleanupApp</mainClass>
+                            <mainClass>com.srjons.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -40,4 +32,21 @@
             </plugin>
         </plugins>
     </build>
-</project>
+</pre>
+```
+
+## Step 2
+
+```agsl
+mvn clean install assembly:single
+```
+
+## Step 3 
+
+Run application using below command
+
+```agsl
+java -jar app-name-jar-with-dependencies.jar
+```
+
+**Note**: Please run jar file which ends with **-jar-with-dependencies.jar**. Otherwise, it will not work
