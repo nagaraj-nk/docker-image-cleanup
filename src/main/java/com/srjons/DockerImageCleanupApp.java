@@ -7,7 +7,7 @@ import java.util.List;
 public class DockerImageCleanupApp {
 
   private static final String CMD_DOCKER_REMOVE_IMG = "cmd /k docker rmi ";
-  private static final String CMD_DOCKER_FIND_IMAGES = "cmd /k docker images | findstr \"<none>\"";
+  private static final String CMD_DOCKER_FIND_IMAGES = "cmd /k docker images --filter \"dangling=true\"";
 
   public static void main(String[] args) throws IOException {
     System.out.println("started docker-image-cleanup");
@@ -22,6 +22,7 @@ public class DockerImageCleanupApp {
     String line = bufferedReader.readLine();
     List<String> imageIdList = new ArrayList<>();
     while (line != null && !line.equals("")) {
+      if (line.startsWith("REPOSITORY")) continue;
       String imageId = extractImageId(line);
       System.out.println("imageId = " + imageId);
       if (imageId != null && !imageId.equals("")) imageIdList.add(imageId);
