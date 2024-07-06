@@ -1,6 +1,9 @@
 package com.srjons;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +25,16 @@ public class DockerImageCleanupApp {
     String line = bufferedReader.readLine();
     List<String> imageIdList = new ArrayList<>();
     while (line != null && !line.equals("")) {
-      if (line.startsWith("REPOSITORY")) continue;
+      if (line.startsWith("REPOSITORY")) {
+        line = bufferedReader.readLine();
+        continue;
+      }
       String imageId = extractImageId(line);
       System.out.println("imageId = " + imageId);
-      if (imageId != null && !imageId.equals("")) imageIdList.add(imageId);
+      if (imageId != null && !imageId.equals("") &&
+          !imageId.contains("srjons.in")) {
+        imageIdList.add(imageId);
+      }
       line = bufferedReader.readLine();
     }
     bufferedReader.close();
